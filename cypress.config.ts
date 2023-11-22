@@ -1,6 +1,7 @@
 import { defineConfig } from 'cypress';
 
 export const defaultConfig = {
+  projectId: 'mahmoud',
   video: false,
   fixturesFolder: 'src/test/javascript/cypress/fixtures',
   screenshotsFolder: 'build/cypress/screenshots',
