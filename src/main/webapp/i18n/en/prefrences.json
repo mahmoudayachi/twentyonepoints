@@ -1,0 +1,27 @@
+{
+  "twentyOnePointsApp": {
+    "prefrences": {
+      "home": {
+        "title": "Prefrences",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Prefrences",
+        "createOrEditLabel": "Create or edit a Prefrences",
+        "search": "Search for Prefrences",
+        "notFound": "No Prefrences found"
+      },
+      "created": "A new Prefrences is created with identifier {{ param }}",
+      "updated": "A Prefrences is updated with identifier {{ param }}",
+      "deleted": "A Prefrences is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Prefrences {{ id }}?"
+      },
+      "detail": {
+        "title": "Prefrences"
+      },
+      "id": "ID",
+      "weeklygoal": "Weeklygoal",
+      "weightunits": "Weightunits",
+      "userprefrences": "Userprefrences"
+    }
+  }
+}

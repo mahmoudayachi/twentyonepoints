@@ -1,0 +1,34 @@
+{
+  "changelogDate": "20231128194919",
+  "fields": [
+    {
+      "fieldName": "datetime",
+      "fieldType": "ZonedDateTime",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "systolic",
+      "fieldType": "Float",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "diastolic",
+      "fieldType": "Float",
+      "fieldValidateRules": ["required"]
+    }
+  ],
+  "name": "Bloodpressure",
+  "pagination": "pagination",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityField": "login",
+      "otherEntityName": "user",
+      "otherEntityRelationshipName": "bloodpressure",
+      "ownerSide": true,
+      "relationshipName": "userbloodpressure",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "service": "no"
+}

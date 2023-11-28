@@ -1,0 +1,29 @@
+{
+  "changelogDate": "20231128194316",
+  "fields": [
+    {
+      "fieldName": "datetime",
+      "fieldType": "ZonedDateTime",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "weight",
+      "fieldType": "Float",
+      "fieldValidateRules": ["required"]
+    }
+  ],
+  "name": "Weight",
+  "pagination": "pagination",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityField": "login",
+      "otherEntityName": "user",
+      "otherEntityRelationshipName": "weight",
+      "ownerSide": true,
+      "relationshipName": "userweight",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "service": "no"
+}

@@ -1,0 +1,33 @@
+{
+  "changelogDate": "20231128195742",
+  "fields": [
+    {
+      "fieldName": "weeklygoal",
+      "fieldType": "Integer",
+      "fieldValidateRules": ["required", "min", "max"],
+      "fieldValidateRulesMax": "21",
+      "fieldValidateRulesMin": "10"
+    },
+    {
+      "fieldName": "weightunits",
+      "fieldType": "units",
+      "fieldValidateRules": ["required"],
+      "fieldValues": "KG,LB"
+    }
+  ],
+  "name": "Prefrences",
+  "pagination": "pagination",
+  "readOnly": false,
+  "relationships": [
+    {
+      "id": false,
+      "otherEntityField": "login",
+      "otherEntityName": "user",
+      "otherEntityRelationshipName": "prefrences",
+      "ownerSide": true,
+      "relationshipName": "userprefrences",
+      "relationshipType": "one-to-one"
+    }
+  ],
+  "service": "no"
+}

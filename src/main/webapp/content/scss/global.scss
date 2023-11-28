@@ -58,14 +58,6 @@ Generic styles
 ========================================================================== */
 
 /* Error highlight on input fields */
-.ng-valid[required],
-.ng-valid.required {
-  border-left: 5px solid green;
-}
-
-.ng-invalid:not(form) {
-  border-left: 5px solid red;
-}
 
 /* other generic styles */
 
@@ -213,6 +205,7 @@ ui bootstrap tweaks
 
 .dropdown-menu {
   padding-left: 0px;
+  display: none;
 }
 
 /* ==========================================================================
@@ -237,3 +230,61 @@ angular-cli removes postcss-rtl processed inline css, processed rules must be ad
   }
 }
 /* jhipster-needle-scss-add-main JHipster will add new css style */
+.jh-card {
+  border: none !important;
+}
+.jh-navbar {
+  background-color: #009688 !important;
+}
+.blockquote {
+  padding: 0.5rem 1rem;
+
+  margin-bottom: 1rem;
+  font-size: 1rem !important;
+  font-weight: 100;
+  border-left: 0.25rem solid #eceeef;
+}
+a {
+  font-weight: normal !important;
+}
+.truncate {
+  width: 180px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  cursor: pointer;
+  &.cal-day-notes {
+    width: 150px;
+  }
+}
+.footer {
+  bottom: 0;
+  left: 0;
+  color: #666;
+  background: #eee;
+  border-top: 1px solid silver;
+  position: fixed;
+  width: 100%;
+  padding: 10px;
+  padding-bottom: 0;
+  text-align: center;
+  z-index: 3;
+  font-size: 0.9em;
+  p {
+    margin-bottom: 7px;
+  }
+}
+.thread-dump-modal-lock {
+  max-width: 450px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Override Bootstrap's default vertical-align: top */
+.table {
+  th,
+  td {
+    vertical-align: middle !important;
+  }
+}
