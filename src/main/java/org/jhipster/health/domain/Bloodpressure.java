@@ -136,4 +136,6 @@ public class Bloodpressure implements Serializable {
             ", diastolic=" + getDiastolic() +
             "}";
     }
+
+    public void setUser(User orElse) {}
 }

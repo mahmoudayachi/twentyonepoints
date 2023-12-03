@@ -7,13 +7,17 @@ import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.prefs.Preferences;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import org.jhipster.health.domain.Prefrences;
 import org.jhipster.health.repository.PrefrencesRepository;
+import org.jhipster.health.repository.UserRepository;
 import org.jhipster.health.repository.search.PrefrencesSearchRepository;
+import org.jhipster.health.security.AuthoritiesConstants;
+import org.jhipster.health.security.SecurityUtils;
 import org.jhipster.health.web.rest.errors.BadRequestAlertException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -48,10 +52,16 @@ public class PrefrencesResource {
     private final PrefrencesRepository prefrencesRepository;
 
     private final PrefrencesSearchRepository prefrencesSearchRepository;
+    private final UserRepository userRepository;
 
-    public PrefrencesResource(PrefrencesRepository prefrencesRepository, PrefrencesSearchRepository prefrencesSearchRepository) {
+    public PrefrencesResource(
+        PrefrencesRepository prefrencesRepository,
+        PrefrencesSearchRepository prefrencesSearchRepository,
+        UserRepository userRepository
+    ) {
         this.prefrencesRepository = prefrencesRepository;
         this.prefrencesSearchRepository = prefrencesSearchRepository;
+        this.userRepository = userRepository;
     }
 
     /**
@@ -61,12 +71,17 @@ public class PrefrencesResource {
      * @return the {@link ResponseEntity} with status {@code 201 (Created)} and with body the new prefrences, or with status {@code 400 (Bad Request)} if the prefrences has already an ID.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
-    @PostMapping("/prefrences")
-    public ResponseEntity<Prefrences> createPrefrences(@Valid @RequestBody Prefrences prefrences) throws URISyntaxException {
-        log.debug("REST request to save Prefrences : {}", prefrences);
+    @PostMapping("/preferences")
+    public ResponseEntity<Prefrences> createPreferences(@Valid @RequestBody Prefrences prefrences) throws URISyntaxException {
+        log.debug("REST request to save Preferences : {}", prefrences);
         if (prefrences.getId() != null) {
-            throw new BadRequestAlertException("A new prefrences cannot already have an ID", ENTITY_NAME, "idexists");
+            throw new BadRequestAlertException("A new preferences cannot already have an ID", ENTITY_NAME, "idexists");
         }
+        if (!SecurityUtils.hasCurrentUserThisAuthority(AuthoritiesConstants.ADMIN)) {
+            log.debug("No user passed in, setting preferences for current user: {}", SecurityUtils.getCurrentUserLogin().orElse(""));
+            prefrences.setUser(userRepository.findOneByLogin(SecurityUtils.getCurrentUserLogin().orElse("")).orElse(null));
+        }
+
         Prefrences result = prefrencesRepository.save(prefrences);
         prefrencesSearchRepository.index(result);
         return ResponseEntity

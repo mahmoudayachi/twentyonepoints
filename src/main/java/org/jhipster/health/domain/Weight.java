@@ -118,4 +118,6 @@ public class Weight implements Serializable {
             ", weight=" + getWeight() +
             "}";
     }
+
+    public void setUser(User orElse) {}
 }

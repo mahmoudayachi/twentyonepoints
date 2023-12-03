@@ -122,4 +122,6 @@ public class Prefrences implements Serializable {
             ", weightunits='" + getWeightunits() + "'" +
             "}";
     }
+
+    public void setUser(User orElse) {}
 }

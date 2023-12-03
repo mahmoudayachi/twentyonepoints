@@ -13,7 +13,10 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import org.jhipster.health.domain.Bloodpressure;
 import org.jhipster.health.repository.BloodpressureRepository;
+import org.jhipster.health.repository.UserRepository;
 import org.jhipster.health.repository.search.BloodpressureSearchRepository;
+import org.jhipster.health.security.AuthoritiesConstants;
+import org.jhipster.health.security.SecurityUtils;
 import org.jhipster.health.web.rest.errors.BadRequestAlertException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -48,13 +51,16 @@ public class BloodpressureResource {
     private final BloodpressureRepository bloodpressureRepository;
 
     private final BloodpressureSearchRepository bloodpressureSearchRepository;
+    private final UserRepository userRepository;
 
     public BloodpressureResource(
         BloodpressureRepository bloodpressureRepository,
-        BloodpressureSearchRepository bloodpressureSearchRepository
+        BloodpressureSearchRepository bloodpressureSearchRepository,
+        UserRepository userRepository
     ) {
         this.bloodpressureRepository = bloodpressureRepository;
         this.bloodpressureSearchRepository = bloodpressureSearchRepository;
+        this.userRepository = userRepository;
     }
 
     /**
@@ -64,16 +70,20 @@ public class BloodpressureResource {
      * @return the {@link ResponseEntity} with status {@code 201 (Created)} and with body the new bloodpressure, or with status {@code 400 (Bad Request)} if the bloodpressure has already an ID.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
-    @PostMapping("/bloodpressures")
-    public ResponseEntity<Bloodpressure> createBloodpressure(@Valid @RequestBody Bloodpressure bloodpressure) throws URISyntaxException {
-        log.debug("REST request to save Bloodpressure : {}", bloodpressure);
-        if (bloodpressure.getId() != null) {
-            throw new BadRequestAlertException("A new bloodpressure cannot already have an ID", ENTITY_NAME, "idexists");
+    @PostMapping("/blood-pressures")
+    public ResponseEntity<Bloodpressure> createBloodPressure(@Valid @RequestBody Bloodpressure bloodPressure) throws URISyntaxException {
+        log.debug("REST request to save BloodPressure : {}", bloodPressure);
+        if (bloodPressure.getId() != null) {
+            throw new BadRequestAlertException("A new bloodPressure cannot already have an ID", ENTITY_NAME, "idexists");
         }
-        Bloodpressure result = bloodpressureRepository.save(bloodpressure);
+        if (!SecurityUtils.hasCurrentUserThisAuthority(AuthoritiesConstants.ADMIN)) {
+            log.debug("No user passed in, using current user: {}", SecurityUtils.getCurrentUserLogin().orElse(""));
+            bloodPressure.setUser(userRepository.findOneByLogin(SecurityUtils.getCurrentUserLogin().orElse("")).orElse(null));
+        }
+        Bloodpressure result = bloodpressureRepository.save(bloodPressure);
         bloodpressureSearchRepository.index(result);
         return ResponseEntity
-            .created(new URI("/api/bloodpressures/" + result.getId()))
+            .created(new URI("/api/blood-pressures/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))
             .body(result);
     }
